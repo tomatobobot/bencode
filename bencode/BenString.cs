@@ -11,7 +11,7 @@ namespace bencode
     {
         public string Value { get; set; }
 
-        internal BenString()
+        public BenString()
         {
 
         }
@@ -28,7 +28,12 @@ namespace bencode
             {
                 benlength += ch;
             }
-            byte[] bytes = reader.ReadBytes(int.Parse(benlength));
+            int bstringlength = 0;
+            if (!int.TryParse(benlength, out bstringlength))
+            {
+                throw new InvalidCastException();
+            }
+            byte[] bytes = reader.ReadBytes(bstringlength);
             return new BenString { Value = Bencoding.BEncoding.GetString(bytes) };
         }
 

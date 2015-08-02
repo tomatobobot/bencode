@@ -29,7 +29,12 @@ namespace bencode
             {
                 benint += ch;
             }
-            return new BenInt { Value = long.Parse(benint) };
+            long bint = 0;
+            if (!long.TryParse(benint, out bint))
+            {
+                throw new InvalidCastException();
+            }
+            return new BenInt { Value = bint };
         }
         public void Encode(BinaryWriter writer)
         {
