@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using System.IO;
 namespace bencode.test
 {
     [TestClass]
@@ -39,6 +39,17 @@ namespace bencode.test
             dict.Add("test", bi);
             string str = Bencoding.EncodeString(dict);
             Assert.AreEqual("d4:testi5ee",str);
+        }
+
+        [TestMethod]
+        public void TestDecodeFile()
+        {
+            string[] files = Directory.GetFiles(".",".torrent");
+            foreach (var item in files)
+            {
+                IBencodingType torrent = Bencoding.DecodeFile(item);
+                Assert.IsNotNull(torrent);
+            }
         }
     }
 }
