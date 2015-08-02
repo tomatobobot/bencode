@@ -1,0 +1,6 @@
+/TestResults
+/bencode.test/bin
+/bencode.test/obj
+/bencode/bin
+/bencode/obj
+/.vs/bencode/v14/*.suo
