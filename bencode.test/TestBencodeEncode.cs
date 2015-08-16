@@ -1,6 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using Base32;
+
 namespace bencode.test
 {
     [TestClass]
@@ -38,18 +42,39 @@ namespace bencode.test
             BenInt bi = new BenInt(5);
             dict.Add("test", bi);
             string str = Bencoding.EncodeString(dict);
-            Assert.AreEqual("d4:testi5ee",str);
+            Assert.AreEqual("d4:testi5ee", str);
         }
 
         [TestMethod]
         public void TestDecodeFile()
         {
-            string[] files = Directory.GetFiles(".",".torrent");
+            string[] files = Directory.GetFiles(".", "*.torrent");
             foreach (var item in files)
             {
                 IBencodingType torrent = Bencoding.DecodeFile(item);
                 Assert.IsNotNull(torrent);
             }
         }
+        [TestMethod]
+        public void TestTorrentFileHash()
+        {
+            string[] files = Directory.GetFiles(".", "*.torrent");
+            foreach (var item in files)
+            {
+                IBencodingType torrent = Bencoding.DecodeFile(item);
+                var dict = torrent as BenDictionary;
+                var xxoo = (BenDictionary)dict["info"];
+                byte[] bytes = Bencoding.CalculateTorrentInfoHash(xxoo);
+                string infohash = "";
+                foreach (var b in bytes)
+                {
+                    infohash += String.Format("{0:X2}", b);
+                }
+
+                Assert.IsNotNull(infohash);
+            }
+        }
+
     }
+
 }

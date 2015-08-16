@@ -14,7 +14,7 @@ namespace bencode
 
         static Bencoding()
         {
-            BEncoding = Encoding.UTF8;
+            BEncoding = Encoding.GetEncoding("ISO-8859-1");
         }
         public static IBencodingType DecodeFile(string filename)
         {
@@ -85,7 +85,11 @@ namespace bencode
         public static byte[] CalculateTorrentInfoHash(BenDictionary dict)
         {
             byte[] bytes = EncodeBytes(dict);
-            return new SHA1CryptoServiceProvider().ComputeHash(bytes);
+            using (SHA1Managed sha=new SHA1Managed())
+            {
+
+                return  sha.ComputeHash(bytes);
+            }
         }
     }
 }

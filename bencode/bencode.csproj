@@ -45,8 +45,12 @@
     <Compile Include="BenInt.cs" />
     <Compile Include="BenList.cs" />
     <Compile Include="BenString.cs" />
+    <Compile Include="ConstDefinition.cs" />
     <Compile Include="IBencodingType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TorrentMetadata.cs" />
+    <Compile Include="TorrentMetadataInfo.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
